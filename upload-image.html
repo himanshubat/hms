@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+<form id="fileinfo" enctype="multipart/form-data" method="post" name="fileinfo">
+    <label>File to stash:</label>
+    <input type="text" name="userId" required id="userId" />
+    <input type="file" name="file" required id="sortpicture" />
+</form>
+<input type="button" value="Stash the file!" id="upload"></input>
+<div id="output"></div>
+<script>
+$(document).ready(function(e) {
+    $('#upload').on('click', function() {
+    var file_data = $('#sortpicture').prop('files')[0];   
+    var form_data = new FormData();    
+    var userId =  $('#userId').val();
+    form_data.append('file', file_data);
+    form_data.append('action','upload-image');
+    form_data.append('userId', userId);
+    //alert(form_data);    
+    //alert(userId);
+    $.ajax({
+            url: 'http://babysoftblog.com/babs15/frame/home.php', // point to server-side PHP script 
+            dataType: 'text',  // what to expect back from the PHP script, if anything
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data,                         
+            type: 'post',
+            success: function(php_script_response){
+                alert(php_script_response); // display response from the PHP script, if any
+                alert('Image Upload successfully....'); // display response from the PHP script, if any
+            }
+     });
+});
+});
+</script>
+</body>
+</html>
